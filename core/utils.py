@@ -1,9 +1,9 @@
 import cv2
-import random
 import colorsys
 import numpy as np
 import tensorflow as tf
 from core.config import cfg
+import secrets
 
 def load_freeze_layer(model='yolov4', tiny=False):
     if tiny:
@@ -131,9 +131,9 @@ def draw_bbox(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), show_la
     colors = list(map(lambda x: colorsys.hsv_to_rgb(*x), hsv_tuples))
     colors = list(map(lambda x: (int(x[0] * 255), int(x[1] * 255), int(x[2] * 255)), colors))
 
-    random.seed(0)
-    random.shuffle(colors)
-    random.seed(None)
+    secrets.SystemRandom().seed(0)
+    secrets.SystemRandom().shuffle(colors)
+    secrets.SystemRandom().seed(None)
 
     out_boxes, out_scores, out_classes, num_boxes = bboxes
     for i in range(num_boxes[0]):
