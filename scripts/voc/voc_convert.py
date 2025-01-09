@@ -4,6 +4,7 @@ import os
 from absl import app, flags
 from absl.flags import FLAGS
 from lxml import etree
+import lxml.etree
 
 
 flags.DEFINE_string('image_dir', '../../data/VOCtrainval_11-May-2012/VOCdevkit/VOC2012/JPEGImages', 'path to image dir')
@@ -30,7 +31,7 @@ def convert_annotation(list_txt, output_path, image_dir, anno_dir, class_names):
             an_p = os.path.join(anno_dir, line + ANNO_EXT)
 
             # Get annotation.
-            root = etree.parse(an_p).getroot()
+            root = etree.parse(an_p, parser=lxml.etree.XMLParser(resolve_entities=False)).getroot()
             bboxes = root.xpath('//object/bndbox')
             names = root.xpath('//object/name')
 
