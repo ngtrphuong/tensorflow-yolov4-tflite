@@ -4,6 +4,7 @@ import os
 from absl import app, flags
 from absl.flags import FLAGS
 from lxml import etree
+import lxml.etree
 
 
 flags.DEFINE_string('anno_dir', '../../data/VOCtrainval_11-May-2012/VOCdevkit/VOC2012/Annotations', 'path to anno dir')
@@ -19,7 +20,7 @@ def make_names(anno_dir, output):
         p = os.path.join(anno_dir, anno_file)
         
         # Get annotation.
-        root = etree.parse(p).getroot()
+        root = etree.parse(p, parser=lxml.etree.XMLParser(resolve_entities=False)).getroot()
         names = root.xpath('//object/name')
 
         for n in names:
