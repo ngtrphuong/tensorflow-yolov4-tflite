@@ -23,7 +23,7 @@ def convert_annotation(list_txt, output_path, image_dir, anno_dir, class_names):
 
     with open(list_txt, 'r') as f, open(output_path, 'w') as wf:
         while True:
-            line = f.readline().strip()
+            line = f.readline(5_000_000).strip()
             if line is None or not line:
                 break
             im_p = os.path.join(image_dir, line + IMAGE_EXT)
